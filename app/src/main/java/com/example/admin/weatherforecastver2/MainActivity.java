@@ -18,8 +18,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements LocationListener {
 
     private TextView textView;
-    private double latitude = 0, longitude = 0;
-    String urlNumber;
+    private double latitude = 35.689634, longitude = 139.692101;//初期値は東京ー東京
+    String urlNumber = "130010";
 
     @Override
     public void onLocationChanged(Location location) {
@@ -32,8 +32,9 @@ public class MainActivity extends Activity implements LocationListener {
 
         urlNumber = Place.minDistance(latitude, longitude);
 
-        //ここまで緯度・経度→都市
+        new GetWeatherForecastTask(this).execute(urlNumber);
 
+        //ここまで緯度・経度→都市
     }
 
     @Override
@@ -104,11 +105,6 @@ public class MainActivity extends Activity implements LocationListener {
         mLocationManager.requestLocationUpdates(provider, 0, 0, this);
 
         //ここまで位置情報取得
-        //
-        latitude = 35.689633;
-        longitude = 139.692100;
-        urlNumber = Place.minDistance(latitude, longitude);
-
 
         setContentView(R.layout.activity_main); //アクティビティを配置
         textView = (TextView) findViewById(R.id.tv_main); //別のviewの定義を呼び出す(定義自体は先にcontent_main.xmlにする)
